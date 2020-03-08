@@ -2,6 +2,7 @@ include <libraries/geodesic_sphere.scad>
 
 include <dishes/cylindrical.scad>
 include <dishes/old_spherical.scad>
+include <dishes/saddle.scad>
 include <dishes/sideways_cylindrical.scad>
 include <dishes/spherical.scad>
 include <dishes/flat.scad>
@@ -24,6 +25,8 @@ module  dish(width, height, depth, inverted) {
       old_spherical_dish(width, height, depth, inverted);
     } else if ($dish_type == "flat") {
       flat_dish(width, height, depth, inverted);
+    } else if ($dish_type == "saddle") {
+      saddle_dish(width, height, depth, inverted);
     } else if ($dish_type == "disable") {
       // else no dish
     } else {

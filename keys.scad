@@ -7,14 +7,43 @@
 
 include <./includes.scad>
 
+//$key_length = 1.25;
+//$stem_slop = 0.3;
+$cherry_bevel = true;
+$stem_type = "rounded_cherry";
+$stem_throw = 5.5;
+$support_type = "flared"; // [flared, bars, flat, disable]
+//$support_type = "flat";
 
 // example key
-dcs_row(5) legend("⇪", size=9) key();
+//dcs_row(5) legend("●", size=9) key();
+//sa_row(0) key();
 
-// example row
-/* for (x = [0:1:4]) {
-  translate_u(0,-x) dcs_row(x) key();
-} */
+sep = 1.2;
+
+module copy_x(num) {
+    for (x = [0:num-1]) translate_u( 0, sep * (x - (num-1)/2.0) ) children();
+}
+
+module copy_y(num) {
+    for (y = [0:num-1]) translate_u( sep * (y - (num-1)/2.0), 0 ) children();
+}
+
+
+// row
+for (n = [1:1:4]) {
+    translate_u(-sep*(n-2.5), -sep/2) rotate( [0, 0, -90] )
+        sa_row(n, 0, 1) key();
+    translate_u(-sep*(n-2.5), +sep/2) rotate( [0, 0, -90] ) legend( "○", size = 9) 
+        sa_row(n, 0, 2) key();
+}
+    
+translate_u(-sep*1.35, sep*3/2) sa_row(0, 0, 1) key();
+translate_u(        0, sep*3/2) legend( "_", size = 8) sa_row(0, 0, 0, +2) key();
+translate_u(+sep*1.35, sep*3/2) legend( "○", size = 9) sa_row(0, 0, 2, +4) key();
+
+// thumb
+//for (n = [0:1]) translate_u(-1.25*(n-0.5)) rotate( [0, 0, -90 + 180*n] ) sa_row(0) key();
 
 // example layout
 /* preonic_default("dcs"); */
