@@ -12,8 +12,8 @@ include <./includes.scad>
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stem_throw = 5.5;
-$stem_float = 0.7;
-$rounded_cherry_stem_d = 5.56;
+$stem_float = 1.0;
+$rounded_cherry_stem_d = 5.5;
 $support_type = "flared"; // [flared, bars, flat, disable]
 //$support_type = "flat";
 
@@ -49,8 +49,8 @@ translate_u(+sep*1.35, sep*3/2) legend( "○", size = 9) sa_row(0, 0, 2, +4) key
 
 // thumb
 for (n = [0:0]) translate_u(-1.25*(n-0.5)) rotate( [0, 0, -90 + 180*n] )
-    legend( ["_", "o"][n], size = 7 )
-    sa_row(0, 0, 1) key();
+    legend( ["=", "o"][n], size = 7 )
+    sa_row(0, 0, 0) key();
 
 // example layout
 /* preonic_default("dcs"); */

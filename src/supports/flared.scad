@@ -14,11 +14,11 @@ module flared(stem_type, loft, height) {
   // all the way to the top has a tendency to warp the outside of the keycap.
   // hopefully the compromise is both
   //flat(stem_type, loft + height/4, height);
-  flat(stem_type, loft + 1.5, height);
+  flat(stem_type, loft + 1.8, height);
 
   translate([0,0,loft]){
     if (stem_type == "rounded_cherry") {
-      linear_extrude(height=height, scale = scale_for_angle(height, $rounded_cherry_stem_d, 66)){
+      linear_extrude(height=height, scale = scale_for_angle(height, $rounded_cherry_stem_d, 76)){
         circle(d=$rounded_cherry_stem_d);
       }
     } else if (stem_type == "alps") {

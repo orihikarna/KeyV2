@@ -29,7 +29,7 @@ module sa_row(n=3, column=0, slop=0, extra_tilt=0) {
   // top row would be something new entirely - 18 tilt maybe?
   if (n == 0) {
     $total_depth = 10 + extra_height;
-    $top_tilt = 8 + extra_tilt;
+    $top_tilt = 6 + extra_tilt;
     children();
   } else if (n == 1) {
     //$total_depth = 14.89 + extra_height;
