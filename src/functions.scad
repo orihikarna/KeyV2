@@ -17,10 +17,10 @@ function outer_box_cherry_stem(slop) = [6 - slop, 6 - slop];
 function cherry_cross(slop, extra_vertical = 0) = [
   // horizontal tine
   //[4.03 + slop, 1.25 + slop / 3],
-  [4.30+ slop, 1.25 + slop],
+  [4.40+ slop, 1.25 + slop],
   // vertical tine
   //[1.15 + slop / 3, 4.23 + extra_vertical + slop / 3 + SMALLEST_POSSIBLE],
-  [1.25 + slop, 4.30 + slop],
+  [1.25 + slop, 4.40 + slop],
 ];
 
 // actual mm key width and height

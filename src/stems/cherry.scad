@@ -7,8 +7,8 @@ extra_vertical = 0.6;
 module inside_cherry_cross(slop) {
   // inside cross
   // translation purely for aesthetic purposes, to get rid of that awful lattice
-  translate([0,0,-SMALLEST_POSSIBLE]) {
-    linear_extrude(height = $stem_throw) {
+  translate([0,0,-SMALLEST_POSSIBLE-$stem_float]) {
+    linear_extrude(height = $stem_throw + $stem_float) {
       square(cherry_cross(slop, extra_vertical)[0], center=true);
       square(cherry_cross(slop, extra_vertical)[1], center=true);
     }
@@ -17,8 +17,8 @@ module inside_cherry_cross(slop) {
   // Guides to assist insertion and mitigate first layer squishing
   if ($cherry_bevel){
     for (i = cherry_cross(slop, extra_vertical)) hull() {
-      linear_extrude(height = 0.01, center = false) offset(delta = 0.4) square(i, center=true);
-      translate([0, 0, 0.5]) linear_extrude(height = 0.01, center = false)  square(i, center=true);
+      translate([0, 0, $stem_float]) linear_extrude(height = 0.01, center = false) offset(delta = 0.4) square(i, center=true);
+      translate([0, 0, 0.5 - $stem_float]) linear_extrude(height = 0.01, center = false)  square(i, center=true);
     }
   }
 }

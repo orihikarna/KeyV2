@@ -1,9 +1,9 @@
 module saddle_dish(width, height, depth, inverted) {
-    $fa = 3;
+    $fa = 4;
     direction = inverted ? 1 : -1;
     hdepth = depth / 2;
     radius = height * height / (8 * hdepth) + hdepth / 2;
-    xdivs = 20;
+    xdivs = 16;
     dx = 1 / xdivs;
     intersection() {
         translate( [-width, -height, depth * (direction - 1)] )

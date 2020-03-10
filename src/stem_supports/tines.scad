@@ -3,16 +3,16 @@ include <../stems/cherry.scad>
 
 module centered_tines(stem_support_height) {
   if ($key_length < 2) {
-    translate([0,0,$stem_support_height / 2]) {
-      cube([total_key_width(), 0.5, $stem_support_height], center = true);
+    translate([0,0,$stem_support_height / 2 - $stem_float]) {
+      cube([total_key_width(), 0.5, $stem_support_height + $stem_float], center = true);
     }
   }
 
-  translate([0,0,$stem_support_height / 2]) {
+  translate([0,0,$stem_support_height / 2 - $stem_float]) {
     cube([
       1,
       total_key_height(),
-      $stem_support_height
+      $stem_support_height + $stem_float
     ],
     center = true);
   }

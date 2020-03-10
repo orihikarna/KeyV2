@@ -219,6 +219,8 @@ module _dish() {
 module envelope(depth_difference=0) {
   s = 1.5;
   hull(){
+    translate( [0, 0, -$stem_float])
+      cube([total_key_width() * s, total_key_height() * s, 0.01], center = true);
     cube([total_key_width() * s, total_key_height() * s, 0.01], center = true);
     top_placement(SMALLEST_POSSIBLE + depth_difference){
       cube([top_total_key_width() * s, top_total_key_height() * s, 0.01], center = true);
