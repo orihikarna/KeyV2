@@ -1,4 +1,4 @@
-module sa_row(n=3, column=0) {
+module sa_row(n=3, column=0, slop=0) {
   $key_shape_type = "sculpted_square";
   $bottom_key_width = 18.4;
   $bottom_key_height = 18.4;
@@ -11,7 +11,7 @@ module sa_row(n=3, column=0) {
   $top_skew = 0;
   $inverted_dish = (n == 0);
   $key_length = (n == 0) ? 1.25 : 1;
-  $stem_slop = 0;
+  $stem_slop = slop;
   $height_slices = 10;
   // might wanna change this if you don't minkowski
   // do you even minkowski bro
