@@ -5,7 +5,7 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   $width_difference = 5.7;
   $height_difference = 5.7;
   $dish_type = (n == 0) ? "saddle" : "spherical";
-  $dish_depth = (n == 0) ? 2.25 : 0.85;
+  $dish_depth = (n == 0) ? 2.1 : 0.85;
   $dish_skew_x = 0;
   $dish_skew_y = 0;
   $top_skew = 0;
@@ -16,6 +16,8 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   // might wanna change this if you don't minkowski
   // do you even minkowski bro
   $corner_radius = 0.25;
+
+  $stabilizers = $key_length >= 6 ? [[-50, 0], [50, 0]] : $key_length >= 2 ? [[-12,0],[12,0]] : [];
 
   // this is _incredibly_ intensive
   /* $rounded_key = true; */

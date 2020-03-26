@@ -12,6 +12,7 @@ $wall_thickness = 3.6;
 //$stem_slop = 0.3;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
+$stabilizer_type = "rounded_cherry";
 $stem_throw = 5.0;
 $stem_float = 0;//1.0;
 $rounded_cherry_stem_d = 5.75;
@@ -39,9 +40,9 @@ module row(sgn = +1) {
 }
 
 module thumb_row() {
-    translate_u(0,sep*(-1.0),0) rotate([0,0,-90]) sa_row(0,0,slop,1.00) key();
-    translate_u(0,sep*(0.15),0) rotate([0,0,-90]) sa_row(0,0,slop,1.25) key();
-    translate_u(0,sep*(1.60),0) rotate([0,0,-90]) sa_row(0,0,slop,1.50) key();
+    translate_u(0,sep*(-1.00),0) rotate([0,0,-90]) sa_row(0,0,slop,1.00) key();
+    translate_u(0,sep*(0.125),0) rotate([0,0,-90]) sa_row(0,0,slop,1.25) key();
+    translate_u(0,sep*(1.750),0) rotate([0,0,-90]) sa_row(0,0,slop,2.00) key();
 }
 
 for (n = [-1:1:0]) {
@@ -50,11 +51,11 @@ for (n = [-1:1:0]) {
 }
 for (n = [0:1]) {
     translate_u(-sep*(n+0.5),0,0)                                  row(-1);
-    translate_u(-sep*(n+0.5),3.0/unit,27.0/unit) rotate([0,180,0]) row(+1);
+    translate_u(-sep*(n+0.5),4.5/unit,26.5/unit) rotate([0,180,0]) row(+1);
 }
 for (n = [0:0]) {
     translate_u(+sep*(n+0.5),0,0)                           thumb_row();
-    translate_u(+sep*(n+0.5),0,27.0/unit) rotate([0,180,0]) thumb_row();
+    translate_u(+sep*(n+0.5),0,26.5/unit) rotate([0,180,0]) thumb_row();
 }
 
 //translate_u(-sep/2,0,        0)                                          row(-1);
