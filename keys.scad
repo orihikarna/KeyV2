@@ -22,14 +22,6 @@ $stem_support_type = "disable";
 
 sep = 1.0 + 1.0/unit;
 
-module copy_x(num) {
-    for (x = [0:num-1]) translate_u( 0, sep * (x - (num-1)/2.0) ) children();
-}
-
-module copy_y(num) {
-    for (y = [0:num-1]) translate_u( sep * (y - (num-1)/2.0), 0 ) children();
-}
-
 slop = 0.125;
 
 module row(sgn = +1) {
@@ -39,24 +31,40 @@ module row(sgn = +1) {
         rotate([0,0,90*(1-sgn)]) sa_row(4,0,slop) key();
 }
 
-module thumb_row() {
-    translate_u(0,sep*(-1.00),0) rotate([0,0,-90]) sa_row(0,0,slop,1.00) key();
-    translate_u(0,sep*(0.125),0) rotate([0,0,-90]) sa_row(0,0,slop,1.25) key();
-    translate_u(0,sep*(1.750),0) rotate([0,0,-90]) sa_row(0,0,slop,2.00) key();
+module thumb_ud( length ) {
+    //translate_u(0,0,0)
+        rotate([0,0,90]) sa_row(0,0,slop,length) children();
+    translate_u(0,0,26.5/unit) rotate([0,180,0])
+        rotate([0,0,90]) sa_row(0,0,slop,length) children();
 }
 
-for (n = [-1:1:0]) {
-    //translate_u(-sep*(n+0.5),0,-28.0/unit)                         row(-1);
-    //translate_u(-sep*(n+0.5),3.0/unit,-1.0/unit) rotate([0,180,0]) row(+1);
+module thumb_ud_col() {
+    translate_u(0,sep*(-1.00)) thumb_ud(1.00) children();
+    translate_u(0,sep*(0.125)) thumb_ud(1.25) children();
+    translate_u(0,sep*(1.750)) thumb_ud(2.00) children();
 }
-for (n = [0:1]) {
-    translate_u(-sep*(n+0.5),0,0)                                  row(-1);
-    translate_u(-sep*(n+0.5),4.5/unit,26.5/unit) rotate([0,180,0]) row(+1);
+
+module sa_ud( n ) {
+    uy = (n == 4) ? 2 : (2 - n);
+    translate_u(0, sep*(n-2), 0)
+        rotate([0,0,180]) sa_row(n,0,slop) children();
+    translate_u(0, sep*uy + 4.5/unit, 26.5/unit)
+        rotate([0,180,0]) sa_row(n,0,slop) children();
 }
-for (n = [0:0]) {
-    translate_u(+sep*(n+0.5),0,0)                           thumb_row();
-    translate_u(+sep*(n+0.5),0,26.5/unit) rotate([0,180,0]) thumb_row();
+
+module sa_ud_col() {
+    sa_ud( 1 ) children();
+    sa_ud( 2 ) children();
+    sa_ud( 3 ) children();
+    sa_ud( 4 ) children();
 }
+
+module sa_set() {
+    for (n = [0:1]) translate_u(-sep*(n+0.5)) sa_ud_col() children();
+    translate_u(sep*0.5) thumb_ud_col() children();
+}
+
+sa_set() key();
 
 //translate_u(-sep/2,0,        0)                                          row(-1);
 //translate_u(+sep/2,0,        0)                   legend( "-", size = 9) row(-1);
