@@ -15,7 +15,8 @@ module flared(stem_type, loft, height) {
   // hopefully the compromise is both
   //flat(stem_type, loft + height/4, height);
   //flat(stem_type, loft + 2.5, height);
-  flat(stem_type, loft + 1.0, height);
+  //flat(stem_type, loft + 1.0, height);
+  flat(stem_type, loft + 0.5, height);
 
   translate([0,0,loft]){
     if (stem_type == "rounded_cherry") {

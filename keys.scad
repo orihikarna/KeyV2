@@ -13,7 +13,7 @@ $wall_thickness = 3.6;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
-$stem_throw = 5.0;
+$stem_throw = 5.5;
 $stem_float = 0;//1.0;
 $rounded_cherry_stem_d = 5.75;
 $support_type = "flared"; // [flared, bars, flat, disable]
@@ -39,11 +39,16 @@ module thumb_ud_col() {
 }
 
 module sa_ud( n ) {
-    uy = (n == 4) ? 2 : (2 - n);
-    translate_u(0, sep*(n-2), 0)
-        rotate([0,0,180]) sa_row(n,0,slop) children();
-    translate_u(0, sep*uy + 4.5/unit, 26.5/unit)
-        rotate([0,180,0]) sa_row(n,0,slop) children();
+    to_make = true;
+    //to_make = false;
+    // bottom
+    translate_u(0, sep*(n-2.5), 0)
+        rotate([0,0,(to_make && n == 4) ? 0 : 180])
+            sa_row(n,0,slop) children();
+    // top
+    translate_u(0, sep*(2.5-n), 27.5/unit) rotate([0,180,0])
+        rotate([0,0,(to_make && n == 4) ? 180 : 0])
+            sa_row(n,0,slop) children();
 }
 
 module sa_ud_col() {
@@ -54,11 +59,11 @@ module sa_ud_col() {
 }
 
 module sa_set() {
-    for (n = [0:1]) translate_u(-sep*(n+0.5)) sa_ud_col() children();
-    translate_u(sep*0.5) thumb_ud_col() children();
+    for (n = [0:0]) translate_u(-sep*(n+0.5)) sa_ud_col() children();
+    //translate_u(sep*0.5) thumb_ud_col() children();
 }
 
-// sa_set() key();
+sa_set() key();
 
 module row(sgn = +1, _slop) {
     for (n = [1:1:3]) translate_u(0,sgn*sep*(2-n),0)
@@ -69,6 +74,7 @@ module row(sgn = +1, _slop) {
         rotate([0,0,90]) sa_row(0,0,_slop,1.25) key();
 }
 
+/*
 translate_u(-sep*3/2,  0)                                                            row(-1, 0.05);
 translate_u(-sep*3/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ".",    size = 6) row(+1, 0.06);
 translate_u(-sep*1/2,  0)                                  legend( ":",    size = 6) row(-1, 0.07);
@@ -77,6 +83,7 @@ translate_u(+sep*1/2,  0)                                  legend( "::",   size 
 translate_u(+sep*1/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( "::.",  size = 6) row(+1, 0.10);
 translate_u(+sep*3/2,  0)                                  legend( ":::",  size = 6) row(-1, 0.11);
 translate_u(+sep*3/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ":::.", size = 6) row(+1, 0.12);
+*/
 
 // example key
 //dcs_row(5) legend("●", size=9) key();
