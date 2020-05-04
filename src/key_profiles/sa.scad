@@ -42,20 +42,25 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   } else if (n == 2) {
     //$total_depth = 12.925 + extra_height;
     //$top_tilt = -7;
-    $total_depth = 12.5 + extra_height;
+    //$total_depth = 12.5 + extra_height;
+    $total_depth = 12.0 + extra_height;
     $top_tilt = -9;
     children();
   } else if (n == 3) {
     //$total_depth = 12.5 + extra_height;
     //$top_tilt = 0;
+    //$total_depth = 11.0 + extra_height;
+    //$top_tilt = -6;
     $total_depth = 11.0 + extra_height;
-    $top_tilt = -6;
+    $top_tilt = -3;
     children();
   } else if (n == 4) {
     //$total_depth = 12.925 + extra_height;
     //$top_tilt = 7;
-    $total_depth = 10.2 + extra_height;
-    $top_tilt = 3;
+    //$total_depth = 10.2 + extra_height;
+    //$top_tilt = 3;
+    $total_depth = 11.5 + extra_height;
+    $top_tilt = 8;
     children();
   } else {
     $total_depth = 12.5 + extra_height;

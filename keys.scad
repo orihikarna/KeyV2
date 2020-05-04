@@ -7,9 +7,7 @@
 
 include <./includes.scad>
 
-$wall_thickness = 3.6;
-//$key_length = 1.25;
-//$stem_slop = 0.3;
+$wall_thickness = 3.2;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
@@ -19,11 +17,23 @@ $rounded_cherry_stem_d = 5.75;
 $support_type = "flared"; // [flared, bars, flat, disable]
 //$support_type = "flat";
 $stem_support_type = "disable";
-$font="Arial Narrow:style=Regular";
+$font="Arial Narrow:style=Bold";
 
 sep = 1.0 + 1.0/unit;
 
-slop = 0.05;
+slop = 0.06;
+
+module bottom_mark( text = "●", depth = 0.5 ) {
+    difference() {
+        children();
+        translate([-4.5,-4.5, $stem_throw + 0.5 + depth])
+            rotate([180,0,0]) {
+                linear_extrude( height = depth + 0.001 ) {
+                    text( text = text, font = $font, size = 3, halign = "center", valign = "center");
+                }
+            }
+    }
+}
 
 module thumb_ud( length ) {
     //translate_u(0,0,0)
@@ -39,16 +49,14 @@ module thumb_ud_col() {
 }
 
 module sa_ud( n ) {
-    to_make = true;
-    //to_make = false;
     // bottom
     translate_u(0, sep*(n-2.5), 0)
-        rotate([0,0,(to_make && n == 4) ? 0 : 180])
-            sa_row(n,0,slop) children();
-    // top
-    translate_u(0, sep*(2.5-n), 27.5/unit) rotate([0,180,0])
-        rotate([0,0,(to_make && n == 4) ? 180 : 0])
-            sa_row(n,0,slop) children();
+        rotate([0,0,180])
+            bottom_mark() sa_row(n,0,slop) children();
+    if (true) {// top
+        translate_u(0, sep*(n-2.5), 28.0/unit) rotate([0,180,0])
+            bottom_mark() sa_row([0, 3, 2, 1, 4][n],0,slop) children();
+    }
 }
 
 module sa_ud_col() {
@@ -91,3 +99,5 @@ translate_u(+sep*3/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ":::.", size 
 
 // example layout
 /* preonic_default("dcs"); */
+
+include <../mywork/keycapst.scad>
