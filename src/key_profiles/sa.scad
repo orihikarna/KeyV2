@@ -59,7 +59,7 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
     //$top_tilt = 7;
     //$total_depth = 10.2 + extra_height;
     //$top_tilt = 3;
-    $total_depth = 11.5 + extra_height;
+    $total_depth = 11.75 + extra_height;
     $top_tilt = 8;
     children();
   } else {
