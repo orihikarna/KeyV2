@@ -19,7 +19,7 @@ use <libraries/skin.scad>
 /* [Hidden] */
 SMALLEST_POSSIBLE = 1/128;
 $fs = .1;
-$unit = 19.05;
+$unit = 16.0;//19.05;
 blue = [.2667,.5882,1];
 color2 = [.5412, .4784, 1];
 purple = [.4078, .3569, .749];
@@ -368,7 +368,13 @@ module keytop() {
     }
     // translation purely for aesthetic purposes, to get rid of that awful lattice
     translate([0,0,-SMALLEST_POSSIBLE]) {
-      shape($wall_thickness, $keytop_thickness);
+      //shape($wall_thickness, $keytop_thickness);
+      linear_extrude( 1.0, scale = 0.7 ) 
+        //circle( $rounded_cherry_stem_d * 1.2 );
+        minkowski() {
+          square( 8.3, center=true);
+          circle( 1 );
+        }      
     }
   }
 }
@@ -410,7 +416,7 @@ module key(inset = false) {
 
   if ($support_type != "disable"){
     inside() {
-      translate([0, 0, $stem_inset]) {
+      translate([0, 0, $stem_inset - $stem_float]) {
         if ($stabilizer_type != "disable") support_for($stabilizers, $stabilizer_type);
 
         // always render stem support even if there isn't a stem.
