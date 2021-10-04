@@ -77,7 +77,7 @@ font_table = [
     font_A, font_B, font_C, font_D, font_E, font_F, font_G, font_H, font_I, font_J,
     font_K, font_L, font_M, font_N, font_O, font_P, font_Q, font_R, font_S, font_T,
     font_U, font_V, font_W, font_X, font_Y, font_Z,
-    //font_0, font_1, font_2, font_3, font_4, font_5, font_6, font_7, font_8, font_9,
+    font_0, //font_1, font_2, font_3, font_4, font_5, font_6, font_7, font_8, font_9,
     font_ex, font_dq, font_sh, font_dl, font_pc, font_ap, font_sq, font_lb, font_rb,
     font_mn, font_ht, font_yn, /*font_at, font_sc, font_cl, font_cm, font_pd,*/ font_sl,
     font_eq, font_td, font_pp, font_bq, font_pl, font_as, font_lt, font_gt, font_qn,
@@ -85,7 +85,7 @@ font_table = [
 ];
 
 //font_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()-^\¥/@;:,./=~|`+*<>?[]\\_ ";
-font_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()-^\¥/=~|`+*<>?[]\\_ ";
+font_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0!\"#$%&'()-^\¥/=~|`+*<>?[]\\_ ";
 
 module draw_font( ch, ux, uy ) {
     fnt = font_table[search( ch, font_chars )[0]];
@@ -115,7 +115,7 @@ module draw_font( ch, ux, uy ) {
 
 ux = 1.3;
 uy = 1;
-if (true) {
+if (false) {
     for (y = [0:10])
         for (x = [0:4]) {
             idx = x + 5 * y;

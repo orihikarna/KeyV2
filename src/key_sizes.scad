@@ -1,7 +1,8 @@
 // key width functions
 
 module u(u=1) {
-  $key_length = u;
+  //$key_length = u;
+  $key_length = u * 1.05;// 16.8 / 16.0 = 1.05
   children();
 }
 
