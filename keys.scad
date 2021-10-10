@@ -95,17 +95,17 @@ module led_slit_char( row, ch1, ch2, w = 6.8 , h = 2.4 ) {
     length = row_heights[row];
     difference() {
         children();
-        translate( [0, 5.4, -1] )
-            rotate( [12, 0, 0] ) {
+        translate( [0, 5.5, -1] )
+            rotate( [10, 0, 0] ) {
                 linear_extrude( length - 5 ) {
-                    led_hole( w * ((ch2 == undef) ? 1 : 2), h );
+                    led_hole( w * ((ch2 == undef) ? 1 : 1.8), h );
                 }
                 linear_extrude( length ) {
                     if (ch2 == undef) {
-                        draw_font( ch1, 0.65, 0.5 );
+                        draw_font( ch1, 0.60, 0.45 );
                     } else {
-                        translate( [-3.8, 0, 0] ) draw_font( ch1, 0.5, 0.5 );
-                        translate( [+3.8, 0, 0] ) draw_font( ch2, 0.5, 0.5 );
+                        translate( [-2.8, 0, 0] ) draw_font( ch1, 0.45, 0.45 );
+                        translate( [+2.8, 0, 0] ) draw_font( ch2, 0.45, 0.45 );
                     }
                 }
             }
@@ -115,33 +115,33 @@ module led_slit_char( row, ch1, ch2, w = 6.8 , h = 2.4 ) {
 
 cols = [
     [
-        [1, 2, 3, 4, "%", "T", "G", "B"],
-        [1, 2, 3, 4, "$", "R", "F", "V"],
-        [1, 2, 3, 4, "#", "E", "D", "C"],
-        [1, 2, 3, 4, "\"","W", "S", "X"],
-        [1, 2, 3, 2, "!", "Q", "A", "w"],
-        [1, 2, 3, 3, "e", "¥", "t", "^"],
+        [1, 2, 3, 4, "5%", "T", "G", "B"],
+        [1, 2, 3, 4, "4$", "R", "F", "V"],
+        [1, 2, 3, 4, "3#", "E", "D", "C"],
+        [1, 2, 3, 4, "2\"", "W", "S", "X"],
+        [1, 2, 3, 2, "1!", "Q", "A", "w"],
+        [1, 2, 3, 3, "e", "¥|", "t", "^~"],
         [0, 0, 0, 2, " ", " ", " ", "-"],
     ],
     [
-        [1, 2, 3, 4, "&", "Y", "H", "N"],
-        [1, 2, 3, 4, "'", "U", "J", "M"],
-        [1, 2, 3, 4, "(", "I", "K", "<"],
-        [1, 2, 3, 4, ")", "O", "L", ">"],
-        [1, 2, 3, 2, "0", "P", "+", "["],
-        [1, 2, 3, 3, "-", "`", "*", "]"],
+        [1, 2, 3, 4, "6&", "Y", "H", "N"],
+        [1, 2, 3, 4, "7'", "U", "J", "M"],
+        [1, 2, 3, 4, "8(", "I", "K", "<"],
+        [1, 2, 3, 4, "9)", "O", "L", ">"],
+        [1, 2, 3, 2, "0",  "P", "+", "["],
+        [1, 2, 3, 3, "-=", "@`", "*", "]"],
         [0, 0, 0, 2, " ", " ", " ", "-"],
     ],
 ];
 
 thumbs = [
     [
-        [0, 4, 4, 1.0, 1.3, 1.6, -1.50, -0.3, 1.20, " ",  "Z",  "SH"],
-        [2, 2, 3, 1.3, 1.3, 1.3, -1.35, 0,    1.35, "AL", "CT", "DL"],
+        [0, 4, 4, 1.0, 1.3, 1.6, -1.50, -0.3, 1.20, " ", "Z",  "s"],
+        [2, 2, 3, 1.3, 1.3, 1.3, -1.35, 0,    1.35, "A", "C", "d"],
     ],
     [
         [0, 4, 4, 1.0, 1.3, 1.6, -1.50, -0.3, 1.20, " ", "/?", "\\_"],
-        [2, 2, 3, 1.3, 1.3, 1.3, -1.35, 0,    1.35, "SH", "SP", "RT"],
+        [2, 2, 3, 1.3, 1.3, 1.3, -1.35, 0,    1.35, "s", "|", "r"],
     ]
 ];
 
@@ -160,34 +160,37 @@ module sa_key( row, w_u=1 ) {
     }
 }
 
-module sa_col( col, rot_a = 0 ) {
+module sa_col( side, col, rot_a = 0 ) {
     for (n = [0:3]) {
-        dat = cols[0][col];
+        dat = cols[side][col];
         row = dat[n];
-        ch  = dat[4+n];
+        ch1 = dat[4+n][0];
+        ch2 = dat[4+n][1];
         translate_u(0, sep_y*(1.5-n), 0)
             //bottom_mark()
             //led_slit(n)
-            led_slit_char( row, ch )
+            led_slit_char( row, ch1, ch2 )
                 rotate( [0, 0, rot_a] )
                     sa_key( row )
                         children();
     }
 }
 
-module thumb_col( col ) {
-    dat = thumbs[0][col];
+module thumb_col( side, col ) {
+    dat = thumbs[side][col];
     for (i = [0:2]) {
         row = dat[i];
         w_u = dat[i+3];
         offset = dat[i+6];
         ch1 = dat[i+9][0];
         ch2 = dat[i+9][1];
-        translate_u(-sep_x * (col+6), sep_y*offset, 0)
-            rotate( [0, 0, 90] )
+        rot_a = (col == 1 && i == 2) ? ((side == 0) ? -90 : +90) : 0;
+        translate_u( sep_x * (col+6), sep_y*offset, 0)
+            rotate( [0, 0, 90 + rot_a] )
                 led_slit_char( row, ch1, ch2 )
-                    sa_key( row, w_u )
-                        children();
+                    rotate( [0, 0, -rot_a] )
+                        sa_key( row, w_u )
+                            children();
     }
 }
 
@@ -195,15 +198,22 @@ intersection() {
   //translate( [-58, 0, 0] ) cube( [100, 100, 100], true );
 }
 
-for (n = [0:6]) {
-    translate_u( -sep_x*n, 0, 0 )
-        sa_col( n, (n == 6) ? +90 : 0 )
-            key();
+for (side = [1:1]) {
+    translate_u( sep_x * (-3.5), 0, 0 ) {
+        if (false) {
+            for (n = [0:6]) {
+                translate_u( sep_x * n, 0, 0 )
+                    sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
+                        key();
+            }
+        }
+        for (n = [1:1]) {
+            thumb_col( side, n ) key();
+        }
+    }
 }
 
-for (n = [0:1]) {
-    thumb_col( n ) key();
-}
+
 
 module row(sgn = +1, _slop) {
     for (n = [1:1:3]) translate_u(0,sgn*sep*(2-n),0)
