@@ -14,7 +14,7 @@ $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
 $stem_throw = 3.8;
 $stem_float = 3.4;
-$rounded_cherry_stem_d = 5.5;//5.3;//5.75;
+$rounded_cherry_stem_d = 5.7;//5.5;//5.3;//5.75;
 $support_type = "flared"; // [flared, bars, flat, disable]
 //$support_type = "flat";
 $stem_support_type = "disable";
@@ -33,8 +33,8 @@ $font="Skia:style=Bold";
 sep_x = 1.11;
 sep_y = 1.06;
 
-//slop = 0.06;
-slop = 0.3;//0.2;
+slop = 0.1;//0.06;
+//slop = 0.3;//0.2;
 
 module bottom_mark( text = "■", depth = 0.8 ) {
     difference() {
@@ -98,7 +98,7 @@ module led_slit_char( row, ch1, ch2, w = 6.8 , h = 2.4 ) {
         translate( [0, 5.5, -1] )
             rotate( [10, 0, 0] ) {
                 linear_extrude( length - 5 ) {
-                    led_hole( w * ((ch2 == undef) ? 1 : 1.8), h );
+                    led_hole( w * ((ch2 == undef) ? 1 : 1.4), h );
                 }
                 linear_extrude( length ) {
                     if (ch2 == undef) {
@@ -136,7 +136,7 @@ cols = [
 
 thumbs = [
     [
-        [0, 4, 4, 1.0, 1.3, 1.6, -1.50, -0.3, 1.20, " ", "Z",  "s"],
+        [0, 4, 4, 1.0, 1.3, 1.6, -1.50, -0.3, 1.20, " ", "Z", "s"],
         [2, 2, 3, 1.3, 1.3, 1.3, -1.35, 0,    1.35, "A", "C", "d"],
     ],
     [
@@ -195,20 +195,22 @@ module thumb_col( side, col ) {
 }
 
 intersection() {
-  //translate( [-58, 0, 0] ) cube( [100, 100, 100], true );
-}
-
-for (side = [1:1]) {
-    translate_u( sep_x * (-3.5), 0, 0 ) {
-        if (false) {
-            for (n = [0:6]) {
-                translate_u( sep_x * n, 0, 0 )
-                    sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
-                        key();
+    //translate( [-58, 0, 0] ) cube( [100, 100, 100], true );
+    //translate( [0, 0, -50] ) cube( [100, 100, 100], true );
+    union() {
+        for (side = [0:1]) {
+            rotate( [0, 180 * side, 0] )
+            translate( [6 * side, 6 * side, 2.5] )
+            translate_u( sep_x * (-3.5), 0, 0 ) {
+                if (true) {
+                    for (n = [0:6]) {
+                        translate_u( sep_x * n, 0, 0 )
+                            sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
+                                key();
+                    }
+                }
+                for (n = [0:1]) thumb_col( side, n ) key();
             }
-        }
-        for (n = [1:1]) {
-            thumb_col( side, n ) key();
         }
     }
 }

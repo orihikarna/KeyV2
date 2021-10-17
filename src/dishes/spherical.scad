@@ -17,6 +17,7 @@ module spherical_dish(width, height, depth, inverted){
       }
     } else {
       $fa=6.5;
+      //$fa=20;
       // rotate 1 because the bottom of the sphere looks like trash.
       scale([chord/2/depth, chord/2/depth]) {
         sphere(r=depth);

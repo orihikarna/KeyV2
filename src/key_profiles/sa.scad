@@ -5,7 +5,7 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   $width_difference  = 4.2;//5.7;
   $height_difference = 4.2;//5.7;
   $dish_type = (n == 0) ? "saddle" : "spherical";
-  $dish_depth = (n == 0) ? 2.1 : 0.85;
+  $dish_depth = (n == 0) ? 2.1 : 1.05;//0.85;
   $dish_skew_x = 0;
   $dish_skew_y = 0;
   $top_skew = 0;
