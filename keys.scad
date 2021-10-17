@@ -102,10 +102,10 @@ module led_slit_char( row, ch1, ch2, w = 6.8 , h = 2.4 ) {
                 }
                 linear_extrude( length ) {
                     if (ch2 == undef) {
-                        draw_font( ch1, 0.60, 0.45 );
+                        draw_font( ch1, 0.60, 0.4 );
                     } else {
-                        translate( [-2.8, 0, 0] ) draw_font( ch1, 0.45, 0.45 );
-                        translate( [+2.8, 0, 0] ) draw_font( ch2, 0.45, 0.45 );
+                        translate( [-2.7, 0, 0] ) draw_font( ch1, 0.45, 0.4 );
+                        translate( [+2.7, 0, 0] ) draw_font( ch2, 0.45, 0.4 );
                     }
                 }
             }
@@ -199,17 +199,29 @@ intersection() {
     //translate( [0, 0, -50] ) cube( [100, 100, 100], true );
     union() {
         for (side = [0:1]) {
-            rotate( [0, 180 * side, 0] )
-            translate( [6 * side, 6 * side, 2.5] )
-            translate_u( sep_x * (-3.5), 0, 0 ) {
-                if (true) {
-                    for (n = [0:6]) {
-                        translate_u( sep_x * n, 0, 0 )
-                            sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
-                                key();
+            rotate( [0, 0 * side, 0 * side] )
+            translate_u( sep_x * +2, 0, 1.7 * side ) {
+                if (true) {// top
+                    translate_u( sep_x * (-3.5), 0, 0 ) {
+                        for (n = [0:3]) {
+                            translate_u( sep_x * n, 0, 0 )
+                                sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
+                                    key();
+                        }
                     }
                 }
-                for (n = [0:1]) thumb_col( side, n ) key();
+                if (true) {// bottom
+                    rotate( [0, 180, 0] )
+                    translate( [8.7, 8.4, 5] )
+                    translate_u( sep_x * (-3.5), 0, 0 ) {
+                        for (n = [4:6]) {
+                            translate_u( sep_x * n, 0, 0 )
+                                sa_col( side, n, (n == 6) ? 90 * (side * 2 - 1) : 0 )
+                                    key();
+                        }
+                        for (n = [0:1]) thumb_col( side, n ) key();
+                    }
+                }
             }
         }
     }
