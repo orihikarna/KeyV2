@@ -1,6 +1,5 @@
 $fs=.1;
-//unit = 19.05;
-unit = 16.0;
+unit = 16.4;//16.0;//19.05;
 
 include <shapes/ISO_enter.scad>
 include <shapes/sculpted_square.scad>

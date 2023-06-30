@@ -1,7 +1,7 @@
 module sa_row(n=3, column=0, slop=0.125, length=1) {
   $key_shape_type = "sculpted_square";
-  $bottom_key_width = 16.0;//18.4;
-  $bottom_key_height = 16.0;//18.4;
+  $bottom_key_width = 16.4;//16.0;//18.4;
+  $bottom_key_height = 16.4;//16.0;//18.4;
   $width_difference  = 4.2;//5.7;
   $height_difference = 4.2;//5.7;
   $dish_type = (n == 0) ? "saddle" : "spherical";

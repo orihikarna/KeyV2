@@ -1,7 +1,7 @@
 // kind of a catch-all at this point for any directive that doesn't fit in the other files
 
 //TODO duplicate def to not make this a special var. maybe not worth it
-unit = 16.0;
+unit = 16.4;
 
 module translate_u(x=0, y=0, z=0){
   translate([x * unit, y*unit, z*unit]) children();

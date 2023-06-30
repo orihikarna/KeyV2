@@ -30,7 +30,7 @@ $font="Skia:style=Bold";
 //$font="Tahoma:style=Bold";
 //$font="Verdana:style=Bold";
 
-sep_x = 1.11;
+sep_x = 1.06;
 sep_y = 1.06;
 
 slop = 0.1;//0.06;
@@ -145,14 +145,14 @@ thumbs = [
 module sa_key(row, w_u=1) {
   // bottom
   if (row != 0) {
-      sa_row(row, 0, slop, 1.05 * w_u)
+      sa_row(row, 0, slop, 1.0 * w_u)
         children();
   }
   if (false) {// top
     translate_u(0, sep_y*(2.5-n), 28.0/unit)
       rotate([0,180,0])
         bottom_mark()
-          sa_row(row, 0, slop, 1.05 * w_u)
+          sa_row(row, 0, slop, 1.0 * w_u)
             children();
   }
 }
