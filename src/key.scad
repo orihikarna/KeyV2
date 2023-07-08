@@ -367,12 +367,21 @@ module keytop() {
       shape(0, 0);
     }
     // translation purely for aesthetic purposes, to get rid of that awful lattice
-    translate([0,0,-SMALLEST_POSSIBLE]) {
+    translate([0,0,$extra_bottom_height-SMALLEST_POSSIBLE]) {
       //shape($wall_thickness, $keytop_thickness);
-      linear_extrude( 1.0, scale = 0.7 ) 
+      linear_extrude( $bottom_hole_height, scale = 0.7 ) 
         //circle( $rounded_cherry_stem_d * 1.2 );
         minkowski() {
           square( 8.3, center=true);
+          circle( 1 );
+        }      
+    }
+    translate([0,0,-SMALLEST_POSSIBLE]) {
+      //shape($wall_thickness, $keytop_thickness);
+      linear_extrude( $extra_bottom_height + SMALLEST_POSSIBLE, scale = 0.9 ) 
+        //circle( $rounded_cherry_stem_d * 1.2 );
+        minkowski() {
+          square( 14.0 + 0.6 * 2 - 1 * 2, center=true);
           circle( 1 );
         }      
     }
