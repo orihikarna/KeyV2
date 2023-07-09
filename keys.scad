@@ -79,26 +79,11 @@ module led_hole(w, h) {
   }
 }
 
-module led_slit_char_(row, ch, w = 6.8, h = 2.4) {
-  length = row_heights[row];
-  difference() {
-    children();
-    translate([0, 5.4, -1])
-      rotate([12, 0, 0]) {
-        linear_extrude(length - 5) {
-          led_hole( w, h );
-        }
-        linear_extrude(length)
-          draw_font(ch, 0.65, 0.5);
-      }
-  }
-}
-
 module led_slit_char(row, ch1, ch2, w = 6.8 , h = 2.4) {
-  length = row_heights[row];
+  length = row_heights[row] + 0.5;
   difference() {
     children();
-    translate([0, 5.5, -1])
+    translate([0, 5.5, -1 + $extra_bottom_height])
       rotate([10, 0, 0]) {
         linear_extrude(length - 5)
           led_hole(w * ((ch2 == undef) ? 1 : 1.4), h);
@@ -146,17 +131,9 @@ thumbs = [// row, width, offset, chars
 ];
 
 module sa_key(row, w_u=1) {
-  // bottom
   if (row != 0) {
       sa_row(row, 0, slop, 1.0 * w_u)
         children();
-  }
-  if (false) {// top
-    translate_u(0, sep_y*(2.5-n), 28.0/unit)
-      rotate([0,180,0])
-        bottom_mark()
-          sa_row(row, 0, slop, 1.0 * w_u)
-            children();
   }
 }
 
@@ -228,33 +205,6 @@ intersection() {
     }
   }
 }
-
-module row(sgn = +1, _slop) {
-  for (n = [1:1:3]) translate_u(0, sgn*sep*(2-n), 0)
-    rotate([0, 0, 90*(1-sgn)]) sa_row(n, 0, _slop) key();
-  translate_u(0, sep*2, 0)
-    rotate([0, 0, 90*(1-sgn)]) sa_row(4, 0, _slop) key();
-  translate_u(0,3*sep+0.125,0)
-    rotate([0, 0, 90]) sa_row(0, 0, _slop, 1.25) key();
-}
-
-/*
-translate_u(-sep*3/2,  0)                                                            row(-1, 0.05);
-translate_u(-sep*3/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ".",    size = 6) row(+1, 0.06);
-translate_u(-sep*1/2,  0)                                  legend( ":",    size = 6) row(-1, 0.07);
-translate_u(-sep*1/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ":.",   size = 6) row(+1, 0.08);
-translate_u(+sep*1/2,  0)                                  legend( "::",   size = 6) row(-1, 0.09);
-translate_u(+sep*1/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( "::.",  size = 6) row(+1, 0.10);
-translate_u(+sep*3/2,  0)                                  legend( ":::",  size = 6) row(-1, 0.11);
-translate_u(+sep*3/2,4.0/unit,26.5/unit) rotate([0,180,0]) legend( ":::.", size = 6) row(+1, 0.12);
-*/
-
-// example key
-//dcs_row(5) legend("●", size=9) key();
-//sa_row(0) key();
-
-// example layout
-/* preonic_default("dcs"); */
 
 //include <../mywork/keycapst.scad>
 
