@@ -37,8 +37,8 @@ module sculpted_square_shape(size, delta, progress) {
     height - extra_height_this_slice
   ];
 
-  offset(r = extra_corner_radius_this_slice) {
-    offset(r = -extra_corner_radius_this_slice) {
+  offset(r = extra_corner_radius_this_slice, $fn=24) {
+    offset(r = -extra_corner_radius_this_slice, $fn=24) {
       side_rounded_square(square_size, r = $more_side_sculpting_factor * progress);
     }
   }
