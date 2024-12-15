@@ -373,7 +373,7 @@ module keytop() {
         //circle( $rounded_cherry_stem_d * 1.2 );
         minkowski() {
           square( 8.3, center=true);
-          circle( 1 );
+          circle( 1, $fn=32 );
         }      
     }
     translate([0,0,-SMALLEST_POSSIBLE]) {
@@ -382,7 +382,7 @@ module keytop() {
         //circle( $rounded_cherry_stem_d * 1.2 );
         minkowski() {
           square( 14.4 - 1 * 2, center=true);
-          circle( 1 );
+          circle( 1, $fn=32 );
         }      
     }
   }
