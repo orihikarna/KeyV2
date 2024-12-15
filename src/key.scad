@@ -18,7 +18,7 @@ use <libraries/skin.scad>
 
 /* [Hidden] */
 SMALLEST_POSSIBLE = 1/128;
-$fs = .1;
+// $fs = .1;
 $unit = 16.4;//16.0;//19.05;
 blue = [.2667,.5882,1];
 color2 = [.5412, .4784, 1];
