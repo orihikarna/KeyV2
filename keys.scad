@@ -9,14 +9,14 @@ include <./includes.scad>
 include <./keyfonts.scad>
 
 $bottom_hole_height = 2.0;
-$extra_bottom_height = 1.2;
+$extra_bottom_height = 1.0;
 
-$wall_thickness = 3.2;
+$wall_thickness = 2.4;//3.2;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
-$stem_throw = 4.2;
-$stem_float = 3.4 - $extra_bottom_height;
+$stem_throw = 4.6;
+$stem_float = 1.6;
 $rounded_cherry_stem_d = 5.7;//5.5;//5.3;//5.75;
 $support_type = "flared"; // [flared, bars, flat, disable]
 //$support_type = "flat";
@@ -213,7 +213,7 @@ include <../Mozza62/layout/kbd-layout.scad>
 center_key = 8;
 size_delta = -1;
 
-if (true)
+if (false)
 intersection() {
   //translate( [-58, 0, 0] ) cube( [100, 100, 100], true );
   //translate( [0, 0, -50] ) cube( [100, 100, 100], true );
@@ -247,7 +247,7 @@ intersection() {
           }
         }
       }
-      if (true) {// bottom
+      if (false) {// bottom
         for (col = [0:1]) {// 0:1
           for (i = [0:2]) {// 0:2
             dat = thumbs[side][col][i];
@@ -304,11 +304,14 @@ if (false) {
   }
 }
 
-// sa_key(1)
+intersection() {
+  // translate( [50, 0, 0] ) cube( [100, 100, 100], true );
+  sa_key(1)
 // sa_key(2)
 // sa_key(3)
 // sa_key(4)
 // sa_key(2, 1.29)
 // sa_key(4, 1.34)
 // sa_key(4, 1.54)
-//   key();
+    key();
+}
