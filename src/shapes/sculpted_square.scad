@@ -5,7 +5,7 @@ include <../libraries/rounded_rectangle_profile.scad>
 // When sculpting sides, how much in should the tops come
 $side_sculpting_factor = 4.5;
 // When sculpting corners, how much extra radius should be added
-$corner_sculpting_factor = 1;
+$corner_sculpting_factor = 0.5;
 // When doing more side sculpting corners, how much extra radius should be added
 $more_side_sculpting_factor = 0.4;
 

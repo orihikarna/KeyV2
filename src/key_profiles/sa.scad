@@ -15,7 +15,7 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   $height_slices = 10;
   // might wanna change this if you don't minkowski
   // do you even minkowski bro
-  $corner_radius = 0.25;
+  $corner_radius = 1.0;
 
   $stabilizers = $key_length >= 6 ? [[-50, 0], [50, 0]] : $key_length >= 2 ? [[-12,0],[12,0]] : [];
 
@@ -23,7 +23,7 @@ module sa_row(n=3, column=0, slop=0.125, length=1) {
   /* $rounded_key = true; */
 
   $top_tilt_y = side_tilt(column);
-  extra_height = ($double_sculpted ? extra_side_tilt_height(column) : 0) + $extra_bottom_height + 1.2;
+  extra_height = ($double_sculpted ? extra_side_tilt_height(column) : 0) + $extra_bottom_height + 0.5;
 
   // 5th row is usually unsculpted or the same as the row below it
   // making a super-sculpted top row (or bottom row!) would be real easy

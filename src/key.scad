@@ -369,15 +369,15 @@ module keytop() {
     // translation purely for aesthetic purposes, to get rid of that awful lattice
     translate([0,0,$extra_bottom_height-SMALLEST_POSSIBLE]) {
       //shape($wall_thickness, $keytop_thickness);
-      linear_extrude( $bottom_hole_height, scale = 0.8 ) 
+      linear_extrude( $bottom_hole_height, scale = 0.96 ) 
         minkowski() {
-          square( 8.3, center=true);
+          square( 7.6, center=true);
           circle( 1, $fn=32 );
         }      
     }
     translate([0,0,-SMALLEST_POSSIBLE]) {
       //shape($wall_thickness, $keytop_thickness);
-      linear_extrude( $extra_bottom_height + SMALLEST_POSSIBLE, scale = 0.96 ) 
+      linear_extrude( $extra_bottom_height + SMALLEST_POSSIBLE, scale = 0.9 ) 
         //circle( $rounded_cherry_stem_d * 1.2 );
         minkowski() {
           square( 14.4 - 1 * 2, center=true);
