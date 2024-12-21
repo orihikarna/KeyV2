@@ -371,7 +371,7 @@ module keytop() {
       //shape($wall_thickness, $keytop_thickness);
       linear_extrude( $bottom_hole_height, scale = 0.96 ) 
         minkowski() {
-          square( 7.6, center=true);
+          square( 7.0, center=true);
           circle( 1, $fn=32 );
         }      
     }

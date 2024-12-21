@@ -9,14 +9,14 @@ include <./includes.scad>
 include <./keyfonts.scad>
 
 $bottom_hole_height = 1.2;
-$extra_bottom_height = 3.0;
+$extra_bottom_height = 2.0;
 
 $wall_thickness = 2.4;//3.2;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
 $stem_throw = 4.0;
-$stem_float = 0.6;
+$stem_float = 1.6;
 $rounded_cherry_stem_d = 5.7;//5.5;//5.3;//5.75;
 $support_type = "flared"; // [flared, bars, flat, disable]
 //$support_type = "flat";
