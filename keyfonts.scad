@@ -116,43 +116,29 @@ font_table = [
 
 font_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!\"#$%&'()-^\¥@/=~|`+*<>?[]\\_etwrspdz";
 
-module draw_font( ch, ux, uy ) {
-    fnt = font_table[search( ch, font_chars )[0]];
-    if (fnt[0] > 0) {
-        for (k = [1:fnt[0]]) {
-            bgn = 1/*count*/ + fnt[0]/*offsets*/ + ((k == 1) ? 0 : fnt[k-1])/*prev*/;
-            end = 1/*count*/ + fnt[0]/*offsets*/ + fnt[k] - 1/*last*/;
-            line_r = 0.75;
-            smooth_r = 0.7 * uy;
-            $fs = 0.02;
-            offset( smooth_r ) offset( -2*smooth_r ) offset( smooth_r )
-            union() {
-                for (i = [bgn:end]) {
-                    j = (i == end)? (bgn) : (i+1);
-                    hull() {
-                        $fn = 32;
-                        translate( [fnt[i][0] * ux, fnt[i][1] * uy] )
-                            rotate( [0, 0, 0] ) circle( uy * line_r );
-                        translate( [fnt[j][0] * ux, fnt[j][1] * uy] )
-                            rotate( [0, 0, 0] ) circle( uy * line_r );
-                    }
+module draw_font(ch, ux, uy) {
+  fnt = font_table[search(ch, font_chars)[0]];
+  if (fnt[0] > 0) {
+    for(k = [1:fnt[0]]) {
+      bgn = 1/*count*/ + fnt[0]/*offsets*/ + ((k == 1) ? 0 : fnt[k - 1])/*prev*/;
+      end = 1/*count*/ + fnt[0]/*offsets*/ + fnt[k] - 1/*last*/;
+      line_r = 0.75;
+      smooth_r = 0.7 * uy;
+      _fn = 32;
+      offset(smooth_r, $fn = _fn) offset(-2 * smooth_r, $fn = _fn) offset(smooth_r, $fn = 36)
+        union() {
+          for(i = [bgn:end]) {
+            j = (i == end) ? (bgn) : (i + 1);
+            hull() {
+              translate([fnt[i][0] * ux, fnt[i][1] * uy])
+                rotate([0, 0, 0])
+                  circle(uy * line_r, $fn = 32);
+              translate([fnt[j][0] * ux, fnt[j][1] * uy])
+                rotate([0, 0, 0])
+                  circle(uy * line_r, $fn = 32);
                 }
+              }
             }
-        }
     }
-}
-
-ux = 1.3;
-uy = 1;
-if (false) {
-    for (y = [0:13])
-        for (x = [0:4]) {
-            idx = x + 5 * y;
-            if (idx < search( "z", font_chars )[0]) {
-                ch = font_chars[idx];
-                if (ch != " ")
-                    translate( [(12*ux+2)*x, -6*uy*y] )
-                        draw_font( ch, ux, uy );
-            }
-        }
+  }
 }
