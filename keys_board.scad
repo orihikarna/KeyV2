@@ -2,16 +2,10 @@ include <./keyfonts.scad>
 
 $extra_bottom_height = 2.0;
 
-sep_x = 1.06;
-sep_y = 1.06;
-
 unit = 16.4;
 
-// copied
-module translate_u(x = 0, y = 0, z = 0) {
-  translate([x * unit, y * unit, z * unit])
-    children();
-}
+sep_x = unit * 1.06;
+sep_y = unit * 1.06;
 
 module led_hole(w, h, r = 0.4) {
   hull()
@@ -65,132 +59,79 @@ module sa_key(row, w_u = 1) {
   }
 }
 
-module sa_col(side, col, rot_a = 0) {
-  for(n = [0:3]) {
-    dat = cols[side][col][n];
-    row = dat[0];
-    ch1 = dat[1][0];
-    ch2 = dat[1][1];
-    idx = dat[2];
-    // echo(key_pos_angles[idx][6], ch1, ch2);
-    $key_bump = (ch1 == "J");
-    translate_u(0, sep_y * (1.5 - n), 0)
-      led_slit_char(row, ch1, ch2)
-        rotate([0, 0, rot_a])
-          sa_key(row);
-  }
-}
-
-module thumb_col(side, col) {
-  for(i = [0:2]) {
-    dat = thumbs[side][col][i];
-    row = dat[0];
-    w_u = dat[1];
-    offset = dat[2];
-    ch1 = dat[3][0];
-    ch2 = dat[3][1];
-    rot_a = (col == 1 && i == 2) ? ((side == 0) ? -90 : +90) : 0;
-    translate_u(sep_x * (col + 6), sep_y * offset, 0)
-      rotate([0, 0, 90 + rot_a])
-        led_slit_char(row, ch1, ch2)
-          rotate([0, 0, -rot_a])
-            sa_key(row, w_u);
-  }
-}
-
 include <../Mozza62/layout/kbd-layout.scad>
 include <mozza62.h>
 
 center_key = 8;
 
+module _key(row, chs, x, y, r, w_u = 1) {
+  translate([x, y, 0])
+    rotate([0, 0, r])
+      led_slit_char(row, chs[0], chs[1])
+        sa_key(row, w_u);
+}
+
+module top_key(side, col, idx, x = undef, y = undef, r = undef) {
+  dat = fingers[side][col][idx];
+  row = dat[0];
+  chs = dat[1];
+  key_no = dat[2];
+  if (key_no >= 0) {
+    prm = key_pos_angles[key_no];
+    // if (key_no == center_key)
+    //   echo(prm[6], "size_w_mm", 1.0 * unit, "w_mm", prm[3], "h_mm", prm[4]);
+    $key_bump = (chs[0] == "J");
+    _key(row, chs, (is_undef(x)) ? prm[0] : x, (is_undef(y)) ? prm[1] : y, (is_undef(r)) ? prm[2] : r);
+  }
+}
+
+module bottom_key(side, col, idx, x = undef, y = undef, r = undef) {
+  dat = thumbs[side][col][idx];
+  row = dat[0];
+  chs = dat[1];
+  key_no = dat[2];
+  w_u = dat[3];
+  offset = dat[4];
+  if (key_no >= 0) {
+    prm = key_pos_angles[key_no];
+    // if (key_no == center_key)
+    //   echo(prm[6], "size_w_mm", 1.0 * unit, "w_mm", prm[3], "h_mm", prm[4]);
+    //   echo(prm[6], "size_w_mm", w_u * unit, "w_mm", prm[3], "size_w", (prm[3] - 0.8) / unit);
+    _key(row, chs, (is_undef(x)) ? prm[0] : x, (is_undef(y)) ? prm[1] : y, (is_undef(r)) ? prm[2] : r, w_u);
+  }
+}
+
 // for keyboard
-if (false)
+if (true)
   for(side = [0:1]) {// 0:1
     if (true)// top
       for(col = [0:6])// 0:6
-        for(n = [0:3]) {// 0:3
-          dat = cols[side][col][n];
-          row = dat[0];
-          ch1 = dat[1][0];
-          ch2 = dat[1][1];
-          idx = dat[2];
-          if (idx >= 0) {
-            if (idx == center_key)
-              echo(prm[6], "size_w_mm", 1.0 * unit, "w_mm", prm[3], "h_mm", prm[4]);
-            prm = key_pos_angles[idx];
-            x = prm[0];// - key_pos_angles[center_key][0];
-            y = prm[1];// - key_pos_angles[center_key][1];
-            r = prm[2];
-            $key_bump = (ch1 == "J");
-            translate([x, y, 0])
-              rotate([0, 0, r])
-                led_slit_char(row, ch1, ch2)
-                  sa_key(row);
-          }
-        }
+        for(idx = [0:3])// 0:3
+          top_key(side, col, idx);
     if (true)// bottom
       for(col = [0:1])// 0:1
-        for(i = [0:2]) {// 0:2
-          dat = thumbs[side][col][i];
-          row = dat[0];
-          w_u = dat[1];
-          offset = dat[2];
-          ch1 = dat[3][0];
-          ch2 = dat[3][1];
-          idx = dat[4];
-          if (idx >= 0) {
-            prm = key_pos_angles[idx];
-            x = prm[0];// - key_pos_angles[center_key][0];
-            y = prm[1];// - key_pos_angles[center_key][1];
-            r = prm[2];
-            // echo(prm[6], "size_w_mm", w_u * unit, "size_h_mm", unit, "w_mm", prm[3], "h_mm", prm[4], "size_w", (prm[3] - 0.8));
-            echo(prm[6], "size_w_mm", w_u * unit, "w_mm", prm[3], "size_w", (prm[3] - 0.8) / unit);
-            translate([x, y, 0])
-              rotate([0, 0, r])
-                led_slit_char(row, ch1, ch2)
-                  sa_key(row, w_u);
-          }
-        }
+        for(idx = [0:2])// 0:2
+          bottom_key(side, col, idx);
   }
 
-  // for order
-if (true)
+  // keycaps for order
+if (false)
   intersection() {
-    translate([-50 - 7.0, 0, 0])
-      cube([100, 100, 100], true);
+    // translate([-50 - 7.0, 0, 0])
+    //   cube([100, 100, 100], true);
     union()
       for(side = [0:0])// [0:1]
-        rotate([0, 0 * side, 0 * side])
-          translate_u(sep_x * +2, 0, 1.7 * side) {
-            if (true)// top
-              translate_u(sep_x * (-3.5), 0, 0)
-                for(n = [1:1])// [0:3]
-                  translate_u(sep_x * n, 0, 0)
-                    sa_col(side, n, (n == 6) ? 90 * (side * 2 - 1) : 0);
-            if (false)// bottom
-              rotate([0, 180, 0])
-                translate([8.7, 8.4, 5])
-                  translate_u(sep_x * (-3.5), 0, 0) {
-                    for(n = [4:6])
-                      translate_u(sep_x * n, 0, 0)
-                        sa_col(side, n, (n == 6) ? 90 * (side * 2 - 1) : 0);
-                    for(n = [0:1])
-                      thumb_col(side, n);
-                  }
-          }
+        rotate([0, 0 * side, 0 * side]) {
+          if (true)// top
+            translate([sep_x * (-3.5), 0, 0])
+              for(col = [0:6])// [0:6]
+                for(idx = [0:3])
+                  top_key(side, col, idx, col * sep_x, idx * sep_y, 0);
+          if (true)// bottom
+            translate([sep_x * 3.5, 0, 0]) {
+              for(col = [0:1])
+                for(idx = [0:3])
+                  bottom_key(side, col, idx, col * sep_x, idx * sep_y, 90);
+            }
+        }
   }
-
-
-ux = 1.3;
-uy = 1;
-if (false)
-  for(y = [0:13])
-    for(x = [0:4]) {
-      idx = x + 5 * y;
-      if (idx < search("z", font_chars)[0]) {
-        ch = font_chars[idx];
-        if (ch != " ")
-          translate([(12 * ux + 2) * x, -6 * uy * y])
-            draw_font(ch, ux, uy);
-      }
-    }
