@@ -90,19 +90,19 @@ module bottom_key(side, col, idx, x = undef, y = undef, r = undef) {
   row = dat[0];
   chs = dat[1];
   key_no = dat[2];
-  w_u = dat[3];
-  offset = dat[4];
   if (key_no >= 0) {
+    w_u = dat[3];
+    offset = dat[4];
     prm = key_pos_angles[key_no];
     // if (key_no == center_key)
     //   echo(prm[6], "size_w_mm", 1.0 * unit, "w_mm", prm[3], "h_mm", prm[4]);
     //   echo(prm[6], "size_w_mm", w_u * unit, "w_mm", prm[3], "size_w", (prm[3] - 0.8) / unit);
-    _key(row, chs, (is_undef(x)) ? prm[0] : x, (is_undef(y)) ? prm[1] : y, (is_undef(r)) ? prm[2] : r, w_u);
+    _key(row, chs, (is_undef(x)) ? prm[0] : x, (is_undef(y)) ? prm[1] : (y + offset * unit * 0), (is_undef(r)) ? prm[2] : r, w_u);
   }
 }
 
 // for keyboard
-if (true)
+if (false)
   for(side = [0:1]) {// 0:1
     if (true)// top
       for(col = [0:6])// 0:6
@@ -115,23 +115,23 @@ if (true)
   }
 
   // keycaps for order
-if (false)
+if (true)
   intersection() {
-    // translate([-50 - 7.0, 0, 0])
-    //   cube([100, 100, 100], true);
+    translate([-50 - 1 * unit, 0, 0])
+      cube([100, 100, 100], true);
     union()
       for(side = [0:0])// [0:1]
-        rotate([0, 0 * side, 0 * side]) {
-          if (true)// top
-            translate([sep_x * (-3.5), 0, 0])
-              for(col = [0:6])// [0:6]
-                for(idx = [0:3])
-                  top_key(side, col, idx, col * sep_x, idx * sep_y, 0);
-          if (true)// bottom
-            translate([sep_x * 3.5, 0, 0]) {
-              for(col = [0:1])
-                for(idx = [0:3])
-                  bottom_key(side, col, idx, col * sep_x, idx * sep_y, 90);
-            }
-        }
+        translate([0, 0, 12 * (0.5 - side)])
+          rotate([0, 180 * side, 180 * side]) {
+            if (true)// top
+              translate([sep_x * -4, 0, 0])
+                for(col = [3:3])// [0:6]
+                  for(idx = [0:3])// [0:3]
+                    top_key(side, col, idx, col * sep_x, sep_y * (1.5 - idx), 0);
+            if (false)// bottom
+              translate([sep_x * 3, 0, 0])
+                for(col = [0:1])// [0:1]
+                  for(idx = [0:2])// [0:2]
+                    bottom_key(side, col, idx, col * sep_x, ([2, 1.4][col] + [1.6, 1.4][col] * -idx) * unit, 90);
+          }
   }
