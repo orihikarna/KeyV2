@@ -17,27 +17,18 @@ $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
 $stem_throw = 4.0;
 $stem_float = 1.6;
-$rounded_cherry_stem_d = 5.7;//5.5;//5.3;//5.75;
-$support_type = "flared"; // [flared, bars, flat, disable]
-//$support_type = "flat";
+// $rounded_cherry_stem_d = 5.3;// my printer
+// $rounded_cherry_stem_d = 5.7; // DMM
+$rounded_cherry_stem_d = 5.5;// JLC
+//slop = 0.3;//0.2; // my printer
+// slop = 0.1;// DMM
+slop = 0.1;// JLC
+$support_type = "flared";// [flared, bars, flat, disable]
 $stem_support_type = "disable";
-//$font="Arial Narrow:style=Bold";
-//$font="Trebuchet MS:style=Bold";
-//$font="Avenir Next:style=Bold";
-//$font="Futura:style=Bold";
-//$font="Gill Sans:style=Bold";
-//$font="Lucida Grande:style=Bold";
-//$font="Menlo:style=Bold";
-//$font="PT Sans Caption:style=Bold";
 $font = "Skia:style=Bold";
-//$font="Tahoma:style=Bold";
-//$font="Verdana:style=Bold";
 
 sep_x = 1.06;
 sep_y = 1.06;
-
-slop = 0.1;//0.06;
-//slop = 0.3;//0.2;
 
 module sa_key(row, w_u = 1) {
   if (row != 0) {
@@ -81,12 +72,12 @@ if (false) {
 $key_bump = true;
 intersection() {
   // translate( [50, 0, 0] ) cube( [100, 100, 100], true );
-  // sa_key(1)
-  // sa_key(2)
-  // sa_key(3)
-  sa_key(4)
-  // sa_key(2, 1.29)
-  // sa_key(4, 1.34)
-  // sa_key(4, 1.54)
+  sa_key(1)
+    // sa_key(2)
+    // sa_key(3)
+    // sa_key(4)
+    // sa_key(2, 1.29)
+    // sa_key(4, 1.34)
+    // sa_key(4, 1.54)
     key();
 }
