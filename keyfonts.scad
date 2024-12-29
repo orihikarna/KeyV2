@@ -1,6 +1,6 @@
 include <keyfonts_dat.h>
 
-module draw_font(ch, ux, uy, line_ratio = 0.75) {
+module draw_font(ch, ux, uy, line_rad = 0.3) {
   fnt = font_table[search(ch, font_chars)[0]];
   nblobs = fnt[0];
   if (nblobs >= 1) {
@@ -9,13 +9,12 @@ module draw_font(ch, ux, uy, line_ratio = 0.75) {
       bgn = 1 + nblobs + ((k == 1) ? 0 : fnt[k - 1]);
       end = 1 + nblobs + fnt[k] - 1;
 
-      line_rad = line_ratio * uy;
-
-      smooth_rad = 0.7 * uy;
+      inf_rad = 0.5 * uy;
+      def_rad = 0.4 * uy;
       fn = 36;
-      offset(smooth_rad, $fn = fn)
-        offset(-2 * smooth_rad, $fn = fn)
-          offset(smooth_rad, $fn = fn)
+      offset(def_rad, $fn = fn)
+        offset(-(def_rad + inf_rad), $fn = fn)
+          offset(inf_rad, $fn = fn)
             union()
               for(i = [bgn:end])
                 hull() {
