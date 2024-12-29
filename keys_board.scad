@@ -106,12 +106,11 @@ module bottom_key(side, col, idx, x = undef, y = undef, r = undef) {
 module _char(row, chs, x, y, r, w_u, shrink) {
   color("lightgreen")
     translate([x, y, 0])
-      rotate([0, 0, r]) {
+      rotate([0, 0, r])
         intersection() {
           sa_key(row, w_u);
           led_slit_char(row, chs[0], chs[1], thick_hole = 3, hole_rad = 0.4 - 0.05 * shrink, line_rad = 0.3 - 0.05 * shrink);
         }
-      }
 }
 
 module top_char(side, col, idx, x, y, r, shrink) {
@@ -128,7 +127,8 @@ module top_char(side, col, idx, x, y, r, shrink) {
       _char(row, chs, x, y, r, 1, shrink);
     translate([x, y + 4.9, 0])
       color("pink")
-        cylinder(h = 3, r = 0.5, center = true, $fn = 36);
+        // cylinder(h = 3, r = 0.5, center = true, $fn = 36);
+        cube([1, 1, 3], center = true);
   }
 }
 
@@ -185,17 +185,21 @@ if (false)// for order
   }
 
   // key legends
-if (false)// legend
+if (true)// legend
   union()
-    for(side = [0:1])// [0:1]
+    for(side = [0:0])// [0:1]
       translate([0, 0, 12 * (0.5 - side)])
         rotate([0, 180 * side, 180 * side]) {
           if (true)// top
-            for(col = [0:6])// [0:6]
+            for(col = [4:4]) {// [0:6]
+              color("pink")
+                translate([0, -1, -1.5])
+                  cube([1, unit * 4, 1], center = true);
               for(idx = [0:3])// [0:3]
                 for(shr = [0:2])// [0:2]
                   top_char(side, col, idx, sep_x * (col - 4), sep_y * (1.5 - idx - shr / 3.0), 0, 2 - shr);
-          if (true)// bottom
+            }
+          if (false)// bottom
             translate([sep_x * 3, 0, 0])
               for(col = [0:1])// [0:1]
                 for(idx = [0:2])// [0:2]
