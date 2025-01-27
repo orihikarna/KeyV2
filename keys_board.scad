@@ -46,15 +46,18 @@ module led_hole(w, h, r = 0.4) {
 
 row_heights = [0, 9.8, 7.0, 7.2, 8.0];
 
-module led_slit_char(row, ch1, ch2, w = 6.8, h = 2.4, hole_rad = 0.4, line_rad = 0.3, thick_hole = 10) {
-  thick_chars = 1.0;
+module led_slit_char(row, ch1, ch2, w = 6.8, h = 2.4, hole_rad = 0.4, line_rad = 0.3, thick_hole = 10, thick_chars = 1.0, hole_top_scale = 1.0) {
   length = row_heights[row] + $extra_bottom_height + 1.0;
   z_offset = length - (thick_hole + thick_chars);
   translate([0, 5.55, 0])
     rotate([8, 0, 0])
       translate([0, 0, z_offset]) {
-        linear_extrude(thick_hole)
+        hole_top_height = 0.6;
+        linear_extrude(thick_hole - hole_top_height + 0.001)
           led_hole(w * ((ch2 == undef) ? 1.2 : 1.6), h, hole_rad);
+        translate([0, 0, thick_hole - hole_top_height])
+          linear_extrude(hole_top_height, scale = hole_top_scale)
+            led_hole(w * ((ch2 == undef) ? 1.2 : 1.6), h, hole_rad);
         linear_extrude(thick_hole + thick_chars + 1.0)
           if (ch2 == undef) {
             draw_font(ch1, 0.60, 0.4, line_rad);
@@ -106,13 +109,15 @@ module bottom_key(side, col, idx, x = undef, y = undef, r = undef) {
   }
 }
 
-module _char(row, chs, x, y, r, w_u, shrink, thick_hole) {
+module _char(row, chs, x, y, r, w_u, shrink, thick_hole, thick_chars = 1.0, hole_top_scale = 1.0) {
   color("lightgreen")
     translate([x, y, 0])
       rotate([0, 0, r])
         intersection() {
           sa_key(row, w_u);
-          led_slit_char(row, chs[0], chs[1], thick_hole = thick_hole, hole_rad = 0.4 - 0.05 * shrink, line_rad = 0.3 - 0.05 * shrink);
+          hole_rad = 0.4 - 0.05 * shrink;
+          line_rad = 0.3 - 0.05 * shrink;
+          led_slit_char(row, chs[0], chs[1], hole_rad = hole_rad, line_rad = line_rad, thick_hole = thick_hole, thick_chars = thick_chars, hole_top_scale = hole_top_scale);
         }
 }
 
@@ -127,7 +132,7 @@ module top_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
   dy = length * sin(-8);
   if (key_no >= 0) {
     translate([0, dy, dz])
-      _char(row, chs, x, y, r, 1, shrink, thick_hole);
+      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.3, hole_top_scale = 0.9);
     color("pink")
       translate([x, y + 5.1, -1])
         cube([1.6, 1.6, 5], center = true);
@@ -146,7 +151,7 @@ module bottom_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
   if (key_no >= 0) {
     // w_u = dat[3];
     translate([0, dy, dz])
-      _char(row, chs, x, y, r, 1, shrink, thick_hole);
+      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.3, hole_top_scale = 0.9);
     translate([x, y + 5.1, -1])
       color("pink")
         cube([1.6, 1.6, 5], center = true);
@@ -174,11 +179,11 @@ if (false) {// for order
     //   cube([100, 100, 100], true);
     union()
       for(side = [1:1]) {// [0:1]
-        if (false)// top
-          for(col = [1:1])// [0:6]
+        if (true)// top
+          for(col = [5:5])// [0:6]
             for(idx = [3:3])// [0:3]
               top_key(side, col, idx, sep_x * (col - 4), sep_y * (1.5 - idx), 0);
-        if (true)// bottom
+        if (false)// bottom
           translate([sep_x * -2, 0, 0])// +3
             for(col = [1:1])// [0:1]
               for(idx = [2:2])// [0:2]
@@ -194,25 +199,31 @@ if (true) {// legend
     for(side = [1:1])// [0:1]
       translate([0, 0, 12 * (0.5 - side)])
         rotate([0, 180 * side * 0, 180 * side * 0]) {
-          if (false)// top
+          if (true)// top
             translate([char_sep_x * -4, 0, 0])
-              for(col = [1:1]) {// [0:6]
+              for(col = [3:3]) {// [0:6]
                 color("pink")
-                  translate([char_sep_x * col, 5.1, -3])
-                    cube([1.6, sep_y * 2 / 3 + 1.6, 1.6], center = true);
-                for(idx = [3:3])// [0:3]
-                  for(shr = [0:2])// [0:2]
-                    top_char(side, col, idx, char_sep_x * col, sep_y * ((1 - shr) / 3.0), 0, 2 - shr, thick_hole = 5 - shr);
+                  translate([char_sep_x * col, 5.1 - sep_y * 1, -3])
+                    cube([1.6, sep_y * 1 / 3 * 7 + 1.6, 1.6], center = true);
+                for(idx = [0:3])// [0:3]
+                  for(shr = [1:2]) {// [0:2]
+                    x = char_sep_x * col;
+                    y = sep_y * ((shr - 1.5 - idx * 2) / 3.0);
+                    top_char(side, col, idx, x = x, y = y, r = 0, shrink = shr, thick_hole = 6 - shr);
+                  }
               }
-          if (true)// bottom
+          if (false)// bottom
             translate([char_sep_x * -2, 0, 0])
               for(col = [1:1]) {// [0:1]
                 color("pink")
                   translate([char_sep_x * col, 5.1, -3])
                     cube([1.6, sep_y * 2 / 3 + 1.6, 1.6], center = true);
                 for(idx = [2:2])// [0:2]
-                  for(shr = [0:2])// [0:2]
-                    bottom_char(side, col, idx, char_sep_x * col, sep_y * (([2, 1.4][col] + [1.6, 1.4][col] * -idx) * 0 + (1 - shr) / 3.0), 0, 2 - shr, thick_hole = 5 - shr);
+                  for(shr = [0:2]) {// [0:2]
+                    x = char_sep_x * col;
+                    y = sep_y * (([2, 1.4][col] + [1.6, 1.4][col] * -idx) * 0 + (1 - shr) / 3.0);
+                    bottom_char(side, col, idx, x = x, y = y, 0, 2 - shr, thick_hole = 5 - shr);
+                  }
               }
         }
 }

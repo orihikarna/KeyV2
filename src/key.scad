@@ -380,8 +380,8 @@ module keytop() {
       linear_extrude( $extra_bottom_height + SMALLEST_POSSIBLE, scale = 0.9 ) 
         //circle( $rounded_cherry_stem_d * 1.2 );
         minkowski() {
-          square( 14.4 - 1 * 2, center=true);
-          circle( 1, $fn=32 );
+          square( 14.4 - 1.2 * 2, center=true);
+          circle( 1.2, $fn=32 );
         }      
     }
   }
