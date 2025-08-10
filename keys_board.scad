@@ -158,8 +158,7 @@ module bottom_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
 }
 
 if (false)// for keyboard
-  for(side = [0:1]) {
-    // 0:1
+  for(side = [0:1]) {/* 0:1 */
     if (true)// top
       for(col = [0:6])// 0:6
         for(idx = [0:3])// 0:3
@@ -179,8 +178,7 @@ if (false) {
     // translate([-50 - 1 * unit, 0, 0])
     //   cube([100, 100, 100], true);
     union()
-      for(side = [0:0]) {
-        // [0:1]
+      for(side = [0:0]) {/* [0:1] */
         if (false)// top
           for(col = [5:5])// [0:6]
             for(idx = [3:3])// [0:3]
@@ -204,15 +202,13 @@ if (true) {
         rotate([0, 180 * side * 0, 180 * side * 0]) {
           if (false)// top
             translate([char_sep_x * -4, 0, 0])
-              for(col = [6:6]) {
-                // [0:6]
+              for(col = [6:6]) {/* [0:6] */
                 color("pink")
                   translate([char_sep_x * col, 5.1 - sep_y * 1, -3])
                     // cube([1.6, sep_y * 1 / 3 * 7 + 1.6, 1.6], center = true);
                     cube([1.6, sep_y * 1 / 3 * 3 + 1.6, 1.6], center = true);
                 for(idx = [0:3])// [0:3]
-                  for(shr = [1:2]) {
-                    // [0:2]
+                  for(shr = [1:2]) {/* [0:2] */
                     x = char_sep_x * col;
                     y = sep_y * ((shr - 1.5 - idx * 2) / 3.0);
                     top_char(side, col, idx, x = x, y = y, r = 0, shrink = shr, thick_hole = 7 - shr);
@@ -220,16 +216,14 @@ if (true) {
               }
           if (true)// bottom
             translate([char_sep_x * -2, 0, 0])
-              for(col = [1:1]) {
-                // [0:1]
+              for(col = [1:1]) {/* [0:1] */
                 color("pink")
                   //   translate([char_sep_x * col, 5.1 - sep_y * 1, -3])
                   // cube([1.6, sep_y * 1 / 3 * 3 + 1.6, 1.6], center = true);
                   translate([char_sep_x * col, 5.1 - sep_y * 2 / 3, -3])
                     cube([1.6, sep_y * 1 / 3 * 5 + 1.6, 1.6], center = true);
                 for(idx = [0:2])// [0:2]
-                  for(shr = [1:2]) {
-                    // [0:2]
+                  for(shr = [1:2]) {/* [0:2] */
                     x = char_sep_x * col;
                     y = sep_y * (shr - 1.5 - idx * 2) / 3.0;
                     bottom_char(side, col, idx, x = x, y = y, r = 0, shrink = shr, thick_hole = 7 - shr);
