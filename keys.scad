@@ -11,7 +11,7 @@ include <./keyfonts.scad>
 $bottom_hole_height = 1.2;
 $extra_bottom_height = 2.0;
 
-$wall_thickness = 2.4;//3.2;
+$wall_thickness = 2.4;// 3.2;
 $cherry_bevel = true;
 $stem_type = "rounded_cherry";
 $stabilizer_type = "rounded_cherry";
@@ -20,8 +20,8 @@ $stem_float = 1.6;
 // $rounded_cherry_stem_d = 5.3;// my printer
 // $rounded_cherry_stem_d = 5.7; // DMM
 $rounded_cherry_stem_d = 5.5;// JLC
-//slop = 0.3;//0.2; // my printer
-// slop = 0.1;// DMM
+// slop = 0.3;//0.2; // my printer
+//  slop = 0.1;// DMM
 slop = 0.1;// JLC
 $support_type = "flared";// [flared, bars, flat, disable]
 $stem_support_type = "disable";
@@ -46,7 +46,7 @@ if (false) {
       cube([100, 100, 100], true);
     union() {
       for(prm = key_pos_angles) {
-        //if (prm[5] <= 30) {
+        // if (prm[5] <= 30) {
         if (prm[5] == center_key) {
           x = prm[0] - key_pos_angles[center_key][0];
           y = prm[1] - key_pos_angles[center_key][1];

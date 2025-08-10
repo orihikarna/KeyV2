@@ -1,14 +1,14 @@
 /* [Basic-Settings] */
 
 // Length in units of key. A regular key is 1 unit; spacebar is usually 6.25
-$key_length = 1.0; // Range not working in thingiverse customizer atm [1:0.25:16]
+$key_length = 1.0;// Range not working in thingiverse customizer atm [1:0.25:16]
 
 // What type of stem you want. Most people want Cherry.
-$stem_type = "cherry";  // [cherry, alps, rounded_cherry, box_cherry, filled, disable]
+$stem_type = "cherry";// [cherry, alps, rounded_cherry, box_cherry, filled, disable]
 
 // The stem is the hardest part to print, so this variable controls how much 'slop' there is in the stem
 // if your keycaps stick in the switch raise this value
-$stem_slop = 0.35; // Not working in thingiverse customizer atm [0:0.01:1]
+$stem_slop = 0.35;// Not working in thingiverse customizer atm [0:0.01:1]
 // broke this out. if your keycaps are falling off lower this value. only works for cherry stems rn
 $stem_inner_slop = 0.2;
 
@@ -24,12 +24,11 @@ $double_sculpted = false;
 // this is the radius of the cylinder the keytops are placed on
 $double_sculpt_radius = 200;
 
-
 // Support type. default is "flared" for easy FDM printing; bars are more realistic, and flat could be for artisans
-$support_type = "flared"; // [flared, bars, flat, disable]
+$support_type = "flared";// [flared, bars, flat, disable]
 
 // Supports for the stem, as it often comes off during printing. Reccommended for most machines
-$stem_support_type = "tines"; // [tines, brim, disabled]
+$stem_support_type = "tines";// [tines, brim, disabled]
 
 // enable to have stem support extend past the keycap bottom, to (hopefully) the next
 // keycap. only works on tines right now
@@ -70,11 +69,12 @@ $top_skew_x = 0;
 
 /* Stem */
 
-// How far the throw distance of the switch is. determines how far the 'cross' in the cherry switch digs into the stem, and how long the keystem needs to be before supports can start. luckily, alps and cherries have a pretty similar throw. can modify to have stouter keycaps for low profile switches, etc
+// How far the throw distance of the switch is. determines how far the 'cross' in the cherry switch digs into the stem,
+// and how long the keystem needs to be before supports can start. luckily, alps and cherries have a pretty similar
+// throw. can modify to have stouter keycaps for low profile switches, etc
 $stem_throw = 4;
 // Diameter of the outside of the rounded cherry stem
 $rounded_cherry_stem_d = 5.5;
-
 
 // How much higher the stem is than the bottom of the keycap.
 // Inset stem requires support but is more accurate in some profiles
@@ -95,8 +95,9 @@ $height_slices = 1;
 /* Dish */
 
 // What type of dish the key has. note that unlike stems and supports a dish ALWAYS gets rendered.
-$dish_type = "cylindrical"; // [cylindrical, spherical, sideways cylindrical, old spherical, disable]
-// How deep the dish 'digs' into the top of the keycap. this is max depth, so you can't find the height from total_depth - dish_depth. besides the top is skewed anyways
+$dish_type = "cylindrical";// [cylindrical, spherical, sideways cylindrical, old spherical, disable]
+// How deep the dish 'digs' into the top of the keycap. this is max depth, so you can't find the height from total_depth
+// - dish_depth. besides the top is skewed anyways
 $dish_depth = 1;
 // How skewed in the x direction the dish is
 $dish_skew_x = 0;
@@ -111,10 +112,11 @@ $dish_overdraw_height = 0;
 // There's a bevel on the cherry stems to aid insertion / guard against first layer squishing making a hard-to-fit stem.
 $cherry_bevel = true;
 
-// How tall in mm the stem support is, if there is any. stem support sits around the keystem and helps to secure it while printing.
+// How tall in mm the stem support is, if there is any. stem support sits around the keystem and helps to secure it
+// while printing.
 $stem_support_height = .8;
 // Font used for text
-$font="DejaVu Sans Mono:style=Book";
+$font = "DejaVu Sans Mono:style=Book";
 // Whether or not to render fake keyswitches to check clearances
 $clearance_check = false;
 // Use linear_extrude instead of hull slices to make the shape of the key
@@ -124,26 +126,26 @@ $linear_extrude_shape = false;
 // brand new, more correct, hopefully faster, lots more work
 // warns in trajectory.scad but it looks benign
 $skin_extrude_shape = false;
-//should the key be rounded? unnecessary for most printers, and very slow
+// should the key be rounded? unnecessary for most printers, and very slow
 $rounded_key = false;
-//minkowski radius. radius of sphere used in minkowski sum for minkowski_key function. 1.75 for G20
+// minkowski radius. radius of sphere used in minkowski sum for minkowski_key function. 1.75 for G20
 $minkowski_radius = .33;
 
 /* Features */
 
-//insert locating bump
+// insert locating bump
 $key_bump = false;
-//height of the location bump from the top surface of the key
-$key_bump_depth = 0.5;
-//distance to move the bump from the front edge of the key
-$key_bump_edge = 0.4;
+// height of the location bump from the top surface of the key
+$key_bump_depth = 0.3;
+// distance to move the bump from the front edge of the key
+$key_bump_edge = 0.3;
 
 /* [Hidden] */
 
-//list of legends to place on a key format: [text, halign, valign, size]
-//halign = "left" or "center" or "right"
-//valign = "top" or "center" or "bottom"
-// Currently does not work with thingiverse customizer, and actually breaks it
+// list of legends to place on a key format: [text, halign, valign, size]
+// halign = "left" or "center" or "right"
+// valign = "top" or "center" or "bottom"
+//  Currently does not work with thingiverse customizer, and actually breaks it
 $legends = [];
 
 // make legends outset instead of inset.
@@ -160,14 +162,22 @@ $inset_legend_depth = 0.2;
 $alps_stem = [4.45, 2.25];
 
 // Enable stabilizer stems, to hold onto your cherry or costar stabilizers
-$stabilizer_type = "costar_stabilizer"; // [costar_stabilizer, cherry_stabilizer, disable]
+$stabilizer_type = "costar_stabilizer";// [costar_stabilizer, cherry_stabilizer, disable]
 
 // Ternaries are ONLY for customizer. they will NOT work if you're using this in
 // OpenSCAD. you should use stabilized(), openSCAD customizer,
 // or set $stabilizers directly
 // Array of positions of stabilizers
-$stabilizers = $key_length >= 6 ? [[-50, 0], [50, 0]] : $key_length >= 2 ? [[-12,0],[12,0]] : [];
+$stabilizers = $key_length >= 6 ? [
+  [-50, 0], 
+  [50, 0]
+] : $key_length >= 2 ? [
+  [-12, 0], 
+  [12, 0]
+] : [];
 
 // Where the stems are in relation to the center of the keycap, in units. default is one in the center
 // Shouldn't work in thingiverse customizer, though it has been...
-$stem_positions = [[0,0]];
+$stem_positions = [
+  [0, 0]
+];

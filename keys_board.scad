@@ -12,7 +12,6 @@ unit = 16.4;
 sep_x = unit * 1.06;
 sep_y = unit * 1.06;
 
-
 module sa_key(row, w_u = 1, bump = false) {
   if (row == 1)
     import("sa_row1.stl");
@@ -132,7 +131,7 @@ module top_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
   dy = length * sin(-8);
   if (key_no >= 0) {
     translate([0, dy, dz])
-      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.2, hole_top_scale = 0.9);
+      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.27, hole_top_scale = 0.9);
     color("pink")
       translate([x, y + 5.1, -1])
         cube([1.6, 1.6, 5], center = true);
@@ -151,7 +150,7 @@ module bottom_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
   if (key_no >= 0) {
     // w_u = dat[3];
     translate([0, dy, dz])
-      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.3, hole_top_scale = 0.9);
+      _char(row, chs, x, y, r, 1, shrink, thick_hole, thick_chars = 1.28, hole_top_scale = 0.9);
     translate([x, y + 5.1, -1])
       color("pink")
         cube([1.6, 1.6, 5], center = true);
@@ -159,7 +158,8 @@ module bottom_char(side, col, idx, x, y, r, shrink, thick_hole = 3) {
 }
 
 if (false)// for keyboard
-  for(side = [0:1]) {// 0:1
+  for(side = [0:1]) {
+    // 0:1
     if (true)// top
       for(col = [0:6])// 0:6
         for(idx = [0:3])// 0:3
@@ -171,19 +171,21 @@ if (false)// for keyboard
   }
 
   // keycaps for order
-if (false) {// for order
+if (false) {
+  // for order
   sep_x = 0;
   sep_y = 0;
   intersection() {
     // translate([-50 - 1 * unit, 0, 0])
     //   cube([100, 100, 100], true);
     union()
-      for(side = [1:1]) {// [0:1]
-        if (true)// top
-          for(col = [6:6])// [0:6]
-            for(idx = [2:2])// [0:3]
+      for(side = [0:0]) {
+        // [0:1]
+        if (false)// top
+          for(col = [5:5])// [0:6]
+            for(idx = [3:3])// [0:3]
               top_key(side, col, idx, sep_x * (col - 4), sep_y * (1.5 - idx), 0);
-        if (false)// bottom
+        if (true)// bottom
           translate([sep_x * -2, 0, 0])// +3
             for(col = [1:1])// [0:1]
               for(idx = [2:2])// [0:2]
@@ -193,42 +195,50 @@ if (false) {// for order
 }
 
 char_sep_x = 0.8 * unit;
-if (true) {// legend
+if (true) {
+  // legend
   char_sep_x = 0;
   union()
-    for(side = [1:1])// [0:1]
+    for(side = [0:0])// [0:1]
       translate([0, 0, 12 * (0.5 - side)])
         rotate([0, 180 * side * 0, 180 * side * 0]) {
-          if (true)// top
+          if (false)// top
             translate([char_sep_x * -4, 0, 0])
-              for(col = [6:6]) {// [0:6]
+              for(col = [6:6]) {
+                // [0:6]
                 color("pink")
                   translate([char_sep_x * col, 5.1 - sep_y * 1, -3])
                     // cube([1.6, sep_y * 1 / 3 * 7 + 1.6, 1.6], center = true);
                     cube([1.6, sep_y * 1 / 3 * 3 + 1.6, 1.6], center = true);
-                for(idx = [1:2])// [0:3]
-                  for(shr = [1:2]) {// [0:2]
+                for(idx = [0:3])// [0:3]
+                  for(shr = [1:2]) {
+                    // [0:2]
                     x = char_sep_x * col;
                     y = sep_y * ((shr - 1.5 - idx * 2) / 3.0);
                     top_char(side, col, idx, x = x, y = y, r = 0, shrink = shr, thick_hole = 7 - shr);
                   }
               }
-          if (false)// bottom
+          if (true)// bottom
             translate([char_sep_x * -2, 0, 0])
-              for(col = [1:1]) {// [0:1]
+              for(col = [1:1]) {
+                // [0:1]
                 color("pink")
-                  translate([char_sep_x * col, 5.1, -3])
-                    cube([1.6, sep_y * 2 / 3 + 1.6, 1.6], center = true);
-                for(idx = [2:2])// [0:2]
-                  for(shr = [0:2]) {// [0:2]
+                  //   translate([char_sep_x * col, 5.1 - sep_y * 1, -3])
+                  // cube([1.6, sep_y * 1 / 3 * 3 + 1.6, 1.6], center = true);
+                  translate([char_sep_x * col, 5.1 - sep_y * 2 / 3, -3])
+                    cube([1.6, sep_y * 1 / 3 * 5 + 1.6, 1.6], center = true);
+                for(idx = [0:2])// [0:2]
+                  for(shr = [1:2]) {
+                    // [0:2]
                     x = char_sep_x * col;
-                    y = sep_y * (([2, 1.4][col] + [1.6, 1.4][col] * -idx) * 0 + (1 - shr) / 3.0);
-                    bottom_char(side, col, idx, x = x, y = y, 0, 2 - shr, thick_hole = 7 - shr);
+                    y = sep_y * (shr - 1.5 - idx * 2) / 3.0;
+                    bottom_char(side, col, idx, x = x, y = y, r = 0, shrink = shr, thick_hole = 7 - shr);
                   }
               }
         }
 }
-if (false) {// font test
+if (false) {
+  // font test
   for(y = [0:9])
     for(x = [0:9])
       translate([6 * x, 3 * y, 0])
